@@ -1,54 +1,52 @@
-<p align="center">
-  <a href="https://www.gatsbyjs.com/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter">
-    <img alt="Gatsby" src="https://www.gatsbyjs.com/Gatsby-Monogram.svg" width="60" />
-  </a>
-</p>
-<h1 align="center">
-  Gatsby minimal starter
-</h1>
+# Gatsby 5 higher order component with partial hydration issue reproduction
 
-## 🚀 Quick start
+To see build fail, run:
 
-1.  **Create a Gatsby site.**
+```sh
+npm install
+npm run build
+```
 
-    Use the Gatsby CLI to create a new site, specifying the minimal starter.
+You should see the following error:
 
-    ```shell
-    # create a new Gatsby site using the minimal starter
-    npm init gatsby
-    ```
+```
+# ...
 
-2.  **Start developing.**
+success Rewriting compilation hashes - 0.052s
+success Building static HTML for pages - 3.357s - 1/1 0.30/s
+failed Building partial HTML for pages - 0.073s
 
-    Navigate into your new site’s directory and start it up.
+ ERROR #80000
 
-    ```shell
-    cd my-gatsby-site/
-    npm run develop
-    ```
+Building partial HTML failed for path "/"
 
-3.  **Open the code and start customizing!**
+This can happen if interactive elements like "useEffect", "useState", "createContext" or event handlers
+are used in a component without declaring the "client export" directive at the top of the file.
 
-    Your site is now running at http://localhost:8000!
+Consider adding "client export" to the top of your file if your component is interactive,
+otherwise refactor your component so it can be statically rendered with React Server Components (RSC).
 
-    Edit `src/pages/index.js` to see your site update in real-time!
 
-4.  **Learn more**
 
-    - [Documentation](https://www.gatsbyjs.com/docs/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter)
+  Error: Unsupported server component type: {...}
 
-    - [Tutorials](https://www.gatsbyjs.com/tutorial/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter)
+  - react-server-dom-webpack-writer.node.production.min.server.js:34 P
+    [gatsby-5-hoc-partial-hydration]/[react-server-dom-webpack]/cjs/react-server-dom-webpack-writer.node.production.min.server.js:34:92
 
-    - [Guides](https://www.gatsbyjs.com/tutorial/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter)
+  - react-server-dom-webpack-writer.node.production.min.server.js:38 ua
+    [gatsby-5-hoc-partial-hydration]/[react-server-dom-webpack]/cjs/react-server-dom-webpack-writer.node.production.min.server.js:38:157
 
-    - [API Reference](https://www.gatsbyjs.com/docs/api-reference/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter)
+  - react-server-dom-webpack-writer.node.production.min.server.js:32 Array.toJSON
+    [gatsby-5-hoc-partial-hydration]/[react-server-dom-webpack]/cjs/react-server-dom-webpack-writer.node.production.min.server.js:32:408
 
-    - [Plugin Library](https://www.gatsbyjs.com/plugins?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter)
+  - stringify
 
-    - [Cheat Sheet](https://www.gatsbyjs.com/docs/cheat-sheet/?utm_source=starter&utm_medium=readme&utm_campaign=minimal-starter)
+  - react-server-dom-webpack-writer.node.production.min.server.js:44 za
+    [gatsby-5-hoc-partial-hydration]/[react-server-dom-webpack]/cjs/react-server-dom-webpack-writer.node.production.min.server.js:44:301
 
-## 🚀 Quick start (Gatsby Cloud)
+  - react-server-dom-webpack-writer.node.production.min.server.js:47 Immediate._onImmediate
+    [gatsby-5-hoc-partial-hydration]/[react-server-dom-webpack]/cjs/react-server-dom-webpack-writer.node.production.min.server.js:47:95
 
-Deploy this starter with one click on [Gatsby Cloud](https://www.gatsbyjs.com/cloud/):
-
-[<img src="https://www.gatsbyjs.com/deploynow.svg" alt="Deploy to Gatsby Cloud">](https://www.gatsbyjs.com/dashboard/deploynow?url=https://github.com/gatsbyjs/gatsby-starter-minimal)
+  - timers:471 processImmediate
+    node:internal/timers:471:21
+```
