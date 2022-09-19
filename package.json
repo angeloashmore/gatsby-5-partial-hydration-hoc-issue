@@ -15,8 +15,9 @@
     "clean": "gatsby clean"
   },
   "dependencies": {
-    "gatsby": "^4.23.0",
-    "react": "^18.1.0",
-    "react-dom": "^18.1.0"
+    "gatsby": "5.0.0-alpha-v5.11",
+    "gatsby-plugin-image": "^3.0.0-alpha-v5.26",
+    "react": "0.0.0-experimental-8951c5fc9-20220915",
+    "react-dom": "0.0.0-experimental-8951c5fc9-20220915"
   }
 }
